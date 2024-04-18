@@ -1,0 +1,33 @@
+
+public class VigenereCipher
+{
+    //make alphabet
+    public static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static String encrypt(String message, String key)
+    {
+        // create encrypted string
+        StringBuilder encrypted = new StringBuilder();
+        
+        // loop through the characters in message and use caesar cipher to change each individual character by index of letter in the alphabet
+        for(int i = 0; i < message.length(); i++){
+            encrypted.append(CaesarCipher.encrypt(String.valueOf(message.charAt(i)), alphabet.indexOf(key.charAt(i%key.length()))));
+        }
+        
+        // return encrypted message
+        return encrypted.toString();
+    }
+    
+    public static String decrypt(String message, String key){
+        // create decrypted string
+        StringBuilder decrypted = new StringBuilder();
+        
+        // loop through the characters in message and use caesar cipher to change each individual character by index of letter in the alphabet
+        for(int i = 0; i < message.length(); i++){
+            decrypted.append(CaesarCipher.encrypt(String.valueOf(message.charAt(i)), 26 - alphabet.indexOf(key.charAt(i % key.length()))));
+        }
+        
+        // return decrypted message
+        return decrypted.toString();
+    }
+    
+}
