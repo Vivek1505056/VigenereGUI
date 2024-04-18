@@ -1,0 +1,18 @@
+
+public class MyCipher
+{
+    public static void main (String[] args){
+        
+        String message = "attacking tonight";
+        String key = "OCULORHINOLARINGOLOGY";
+        
+        VigenereCipher cipher = new VigenereCipher();
+        String encrypted = cipher.encrypt(message, key);
+        String decrypted = cipher.decrypt(encrypted, key);
+        
+        System.out.println(message);
+        System.out.println(encrypted);
+        System.out.println(decrypted);
+        
+    }
+}
