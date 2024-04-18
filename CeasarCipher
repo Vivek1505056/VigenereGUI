@@ -1,0 +1,105 @@
+class CaesarCipher{
+    
+    public static void main (String[] args){
+
+        int key1 = 3;  
+        int key2 = 6;
+         
+        String message = "I am a student in computer science class";
+        String messageTwo = "I know how to decrypt the message";
+
+        String encrypted = encrypt(message, key1);
+        String encryptedTwo = encryptTwoKeys(messageTwo, 2, 17);
+        String decrypted = encrypt("L DP D VWXGHQW LQ FRPSXWHU VFLHQFH FODVV",26 - key1);
+        String decryptedTwo = encryptTwoKeys("Z BPFY JFY VF UGTTPRK KJV DGJURIV", 26 - 2, 26 - 17);
+
+        
+        System.out.println(encrypted);
+        System.out.println(decrypted);
+        System.out.println(encryptedTwo);
+        System.out.println(decryptedTwo);
+    }
+    
+    public static String encrypt(String message, int key1){
+        
+        //Write down the alphabet
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        //Compute the shifted alphabet
+        String shiftedAlphabet = alphabet.substring(key1) + alphabet.substring(0, key1);
+        message = message.toUpperCase();
+        //Count from 0 to < length of encrypted, (call it i)
+        StringBuilder encrypted = new StringBuilder();
+        String currChar;
+        int idx;
+        
+        for(int i = 0; i < message.length(); i++){ 
+            //Look at the ith character of encrypted (call it currChar)
+            currChar = String.valueOf(message.charAt(i));
+            
+            //Find the index of currChar in the alphabet (call it idx)
+            idx = alphabet.indexOf(currChar);
+            //If currChar is in the alphabet
+            if (idx == -1) {
+                encrypted.append(message.charAt(i));
+            }
+            else {
+                //Get the idxth character of shiftedAlphabet (newChar)
+                encrypted.append(shiftedAlphabet.charAt(idx));
+            }
+
+        }
+             
+          //Your answer is the String inside of encrypted
+          return encrypted.toString();
+    }   
+
+    public static String encryptTwoKeys(String message, int key1, int key2){
+        
+    //Write down the alphabet
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String shiftedAlphabetEven = "";
+        String shiftedAlphabetOdd = "";
+        message = message.toUpperCase();
+
+        for(int j = 0; j < alphabet.length(); j++){
+            if(j % 2 == 0){
+                shiftedAlphabetEven = alphabet.substring(key1) + alphabet.substring(0, key1);
+            }
+            else{
+                shiftedAlphabetOdd = alphabet.substring(key2) + alphabet.substring(0, key2);
+            }
+        }
+
+            
+    //Count from 0 to < length of encrypted, (call it i)
+        StringBuilder encrypted = new StringBuilder();
+        String currChar;
+        int idx;
+        
+        for(int i = 0; i < message.length(); i++){
+            //Look at the ith character of encrypted (call it currChar)
+            currChar = String.valueOf(message.charAt(i));
+            
+            //Find the index of currChar in the alphabet (call it idx)
+            idx = alphabet.indexOf(currChar);
+    
+            //If currChar is in the alphabet
+            if (idx == -1) {
+                encrypted.append(message.charAt(i));
+            }
+            else {
+                //Get the idxth character of shiftedAlphabet (newChar)
+                if(i % 2 == 1){
+                    encrypted.append(shiftedAlphabetEven.charAt(idx));
+                }else{
+                    encrypted.append(shiftedAlphabetOdd.charAt(idx));
+                }
+            }
+
+        }
+        
+          //Your answer is the String inside of encrypted
+          return encrypted.toString();
+    }   
+    
+}
