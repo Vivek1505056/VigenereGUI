@@ -1,0 +1,117 @@
+import java.awt.*; 
+import javax.swing.*;
+import java.awt.event.*;
+import javax.swing.border.*;
+
+class MyVigenere implements ActionListener{
+    
+    private JButton b1;
+    private JTextField field1, field2;
+    private String encrypted, decrypted, key, message;
+    private JLabel v1, v2;
+    
+    public void vigenereGUI(){
+        JFrame frame = new JFrame("Vigenere Cipher");
+        
+        JPanel center = new JPanel();
+        center.setPreferredSize(new Dimension(600, 490));
+        frame.getContentPane().add(center, BorderLayout.CENTER);
+
+        JPanel bottom = new JPanel();
+        bottom.setPreferredSize(new Dimension(600, 50));
+        bottom.setBackground(Color.gray);
+        frame.getContentPane().add(bottom, BorderLayout.PAGE_END);
+    
+        JPanel topLabel = new JPanel();
+        JLabel messageTxt = new JLabel("Message:");
+        topLabel.add(messageTxt);
+
+        JPanel topField = new JPanel();
+        topField.setPreferredSize(new Dimension(600, 30));
+
+        JPanel bottomLabel = new JPanel();
+        JLabel keyTxt = new JLabel("Key:");
+        bottomLabel.add(keyTxt);
+        
+        JPanel bottomField = new JPanel();
+        bottomField.setPreferredSize(new Dimension(600, 30));        
+        
+        JPanel containerPanel = new JPanel(new GridLayout(4, 1));
+        containerPanel.add(topLabel);
+        containerPanel.add(topField);
+        containerPanel.add(bottomLabel);
+        containerPanel.add(bottomField);
+
+        JPanel values = new JPanel(new GridLayout(2,1));
+
+        v1 = new JLabel("", JLabel.CENTER);
+        v2 = new JLabel("", JLabel.CENTER);
+
+        values.add(v1);
+        values.add(v2);
+        
+        center.setLayout(new BorderLayout());
+        center.add(values, BorderLayout.PAGE_END);  
+
+        frame.add(containerPanel, BorderLayout.NORTH);
+        
+        b1 = new JButton("Encrypt");
+        bottom.add(b1);
+        
+        field1 = new JTextField();
+        field1.setPreferredSize(new Dimension(300, 30));
+        topField.add(field1);
+
+        field2 = new JTextField();
+        field2.setPreferredSize(new Dimension(300, 30));
+        bottomField.add(field2);
+        
+        ImageIcon icon = new ImageIcon("/Users/vivekkoul/Desktop/JavaImages/vigenere.jpeg");
+        
+        JLabel imageLabel = new JLabel();
+        imageLabel.setIcon(scaleIconTo(icon, 300,300));
+        
+        JPanel imagePanel = new JPanel();
+        imagePanel.add(imageLabel);
+        
+        center.add(imagePanel, BorderLayout.CENTER);
+        
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationByPlatform(true);
+        b1.addActionListener(this);
+        frame.pack();
+        frame.setVisible(true);
+        
+    }
+    
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == b1) {
+            message = field1.getText();
+            key = field2.getText();
+            key = key.toUpperCase();
+            
+            encrypted = VigenereCipher.encrypt(message, key);
+            decrypted = VigenereCipher.decrypt(encrypted, key);
+ 
+            v1.setText(encrypted);
+            v2.setText(decrypted);
+
+        }
+    }
+    
+    public static ImageIcon scaleIconTo(ImageIcon icon, int width, int height) {
+        Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        icon.setImage(image);
+        return icon;
+    }
+    
+    public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                MyVigenere vigenere = new MyVigenere();
+                vigenere.vigenereGUI();
+            }
+        });
+        
+    }
+}
